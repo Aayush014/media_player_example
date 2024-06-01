@@ -9,5 +9,4 @@ class SliderProvider extends ChangeNotifier {
     _currentPage = index;
     notifyListeners();
   }
-
 }

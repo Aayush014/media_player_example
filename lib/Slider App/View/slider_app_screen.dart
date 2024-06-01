@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'slider_provider.dart';
+import '../Provider/slider_provider.dart';
 
 class SliderAppScreen extends StatelessWidget {
   const SliderAppScreen({super.key});
