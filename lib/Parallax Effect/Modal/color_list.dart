@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-List colorList = [
+ List colorList = [
   {
     'colors' : [
       Colors.pink.shade100,
@@ -26,7 +26,7 @@ List colorList = [
     'colors' : [
       Colors.teal.shade100,
       Colors.green.shade300,
-      Colors.pink.shade200,
+      Colors.teal.shade300,
     ]
   },
 ];

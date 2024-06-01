@@ -12,7 +12,7 @@ void main() {
       child: const MyApp(),
     ),
     ChangeNotifierProvider(
-      create: (context) => GradientProvider(),
+      create: (context) => CarouselProvider(),
     )
   ]));
 }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../View/components/card_contant.dart';
-import 'card_modal.dart';
+import '../Modal/card_modal.dart';
+import '../Provider/effect_provider.dart';
 import 'dart:math' as math;
+import '../View/components/card_contant.dart';
 
 class SlidingCardsView extends StatefulWidget {
   const SlidingCardsView({super.key});
@@ -18,6 +20,12 @@ class _SlidingCardsViewState extends State<SlidingCardsView> {
   void initState() {
     super.initState();
     pageController = PageController(viewportFraction: 0.8);
+
+    // Listen to page changes
+    pageController.addListener(() {
+      int currentPage = pageController.page?.round() ?? 0;
+      Provider.of<CarouselProvider>(context, listen: false).setPage(currentPage);
+    });
   }
 
   @override
@@ -35,18 +43,16 @@ class _SlidingCardsViewState extends State<SlidingCardsView> {
         controller: pageController,
         itemCount: demoCardData.length,
         itemBuilder: (context, index) {
-          // double offset = pageOffset - index;
-
           return AnimatedBuilder(
             animation: pageController,
-            builder: (context,child) {
-              double pageOffset =0;
-              if(pageController.position.haveDimensions){
-                pageOffset = pageController.page!-index;
+            builder: (context, child) {
+              double pageOffset = 0;
+              if (pageController.position.haveDimensions) {
+                pageOffset = pageController.page! - index;
               }
-              double guess = math.exp(-(math.pow(pageOffset.abs()-0.5, 2)/0.08));
+              double guess = math.exp(-(math.pow(pageOffset.abs() - 0.5, 2) / 0.08));
               return Transform.translate(
-                offset: Offset(-32*guess*pageOffset.sign, 0),
+                offset: Offset(-32 * guess * pageOffset.sign, 0),
                 child: Container(
                   clipBehavior: Clip.none,
                   margin: const EdgeInsets.only(left: 8, right: 8, bottom: 24),
@@ -63,18 +69,15 @@ class _SlidingCardsViewState extends State<SlidingCardsView> {
                   ),
                   child: Column(
                     children: <Widget>[
-                      // Image
                       ClipRRect(
-                        borderRadius:
-                            const BorderRadius.vertical(top: Radius.circular(32)),
+                        borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
                         child: Image.asset(
                           'Assets/${demoCardData[index].image}',
                           height: MediaQuery.of(context).size.height * 0.3,
                           fit: BoxFit.cover,
-                          alignment: Alignment(pageOffset,0),
+                          alignment: Alignment(pageOffset, 0),
                         ),
                       ),
-                      // Rest of the content
                       const SizedBox(height: 8),
                       Expanded(
                         child: CardContent(

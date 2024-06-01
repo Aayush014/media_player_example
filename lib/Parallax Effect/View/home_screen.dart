@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:media_player_example/Parallax%20Effect/Modal/sliding_card.dart';
+import 'package:provider/provider.dart';
+
+import '../Modal/color_list.dart';
+import '../Modal/sliding_card.dart';
+import '../Provider/effect_provider.dart';
 import 'components/tab_screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,27 +14,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int index = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: myAppBar(),
-      body: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Tabs(),
-          Spacer(),
-          SlidingCardsView(),
-          Spacer(flex: 2,),
-        ],
-      ),
+      body: Consumer<CarouselProvider>(builder: (context, carouselProvider, child) {
+        final colors = colorList[carouselProvider.currentPage]['colors'];
+        return Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: colors!,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Tabs(),
+              Spacer(),
+              SlidingCardsView(),
+              Spacer(
+                flex: 2,
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }
 
-AppBar myAppBar (){
+AppBar myAppBar() {
   return AppBar(
     centerTitle: true,
     title: const Text(
@@ -42,34 +56,3 @@ AppBar myAppBar (){
     ),
   );
 }
-
-List colorList = [
-  {
-    'colors' : [
-      Colors.pink.shade100,
-      Colors.blue.shade200,
-      Colors.pink.shade200,
-    ]
-  },
-  {
-    'colors' : [
-      Colors.yellow.shade200,
-      Colors.blue.shade300,
-      Colors.red.shade300,
-    ]
-  },
-  {
-    'colors' : [
-      Colors.yellow.shade200,
-      Colors.orange.shade200,
-      Colors.brown.shade300,
-    ]
-  },
-  {
-    'colors' : [
-      Colors.teal.shade100,
-      Colors.green.shade300,
-      Colors.pink.shade200,
-    ]
-  },
-];

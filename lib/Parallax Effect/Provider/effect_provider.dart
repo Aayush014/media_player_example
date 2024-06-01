@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class GradientProvider with ChangeNotifier {
-  int _index = 0;
+class CarouselProvider with ChangeNotifier {
+  int _currentPage = 0;
 
-  int get index => _index;
+  int get currentPage => _currentPage;
 
-  void setIndex(int newIndex) {
-    _index = newIndex;
+  void setPage(int page) {
+    _currentPage = page;
     notifyListeners();
   }
 }
